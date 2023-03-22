@@ -4,6 +4,7 @@ using CustomerService.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CustomerService.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230322194003_OrderEntity")]
+    partial class OrderEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,7 +75,8 @@ namespace CustomerService.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("AddressId")
+                        .IsUnique();
 
                     b.ToTable("Customers");
                 });
@@ -112,11 +116,13 @@ namespace CustomerService.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("AddressId")
+                        .IsUnique();
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.ToTable("Orders");
                 });
@@ -142,8 +148,8 @@ namespace CustomerService.Migrations
             modelBuilder.Entity("CustomerService.Entities.Customer", b =>
                 {
                     b.HasOne("CustomerService.Entities.Address", "Address")
-                        .WithMany("Customer")
-                        .HasForeignKey("AddressId")
+                        .WithOne("Customer")
+                        .HasForeignKey("CustomerService.Entities.Customer", "AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -153,8 +159,8 @@ namespace CustomerService.Migrations
             modelBuilder.Entity("CustomerService.Entities.Order", b =>
                 {
                     b.HasOne("CustomerService.Entities.Address", "Address")
-                        .WithMany("Order")
-                        .HasForeignKey("AddressId")
+                        .WithOne("Order")
+                        .HasForeignKey("CustomerService.Entities.Order", "AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -165,8 +171,8 @@ namespace CustomerService.Migrations
                         .IsRequired();
 
                     b.HasOne("CustomerService.Entities.Product", "Product")
-                        .WithMany("Order")
-                        .HasForeignKey("ProductId")
+                        .WithOne("Order")
+                        .HasForeignKey("CustomerService.Entities.Order", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -179,9 +185,11 @@ namespace CustomerService.Migrations
 
             modelBuilder.Entity("CustomerService.Entities.Address", b =>
                 {
-                    b.Navigation("Customer");
+                    b.Navigation("Customer")
+                        .IsRequired();
 
-                    b.Navigation("Order");
+                    b.Navigation("Order")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CustomerService.Entities.Customer", b =>
@@ -191,7 +199,8 @@ namespace CustomerService.Migrations
 
             modelBuilder.Entity("CustomerService.Entities.Product", b =>
                 {
-                    b.Navigation("Order");
+                    b.Navigation("Order")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

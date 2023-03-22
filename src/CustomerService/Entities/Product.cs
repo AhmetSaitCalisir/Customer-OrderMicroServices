@@ -5,6 +5,6 @@
         public string Id { get; set; }
         public string ImageUrl { get; set; }
         public string Name { get; set; }
-        public Order Order { get; set; }
+        public ICollection<Order> Order { get; set; }
     }
 }
