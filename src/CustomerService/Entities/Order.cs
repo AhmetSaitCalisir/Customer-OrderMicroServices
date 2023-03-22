@@ -2,7 +2,7 @@
 {
     public class Order : EntityBase
     {
-        public string Id { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
         public string CustomerId { get; set; }
         public int Quantity { get; set; }
         public double Price { get; set; }

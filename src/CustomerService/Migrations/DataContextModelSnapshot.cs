@@ -44,7 +44,7 @@ namespace CustomerService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("CustomerService.Entities.Customer", b =>
@@ -74,7 +74,7 @@ namespace CustomerService.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("CustomerService.Entities.Order", b =>
@@ -118,7 +118,7 @@ namespace CustomerService.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("CustomerService.Entities.Product", b =>
@@ -136,7 +136,7 @@ namespace CustomerService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("CustomerService.Entities.Customer", b =>
