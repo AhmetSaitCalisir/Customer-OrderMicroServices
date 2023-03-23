@@ -1,7 +1,6 @@
 ﻿using CustomerService.Data;
-using CustomerService.Entities;
+using CustomerService.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CustomerService.Controllers
 {
@@ -10,10 +9,12 @@ namespace CustomerService.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly ICustomerService _customerService;
 
-        public CustomerController(DataContext context)
+        public CustomerController(DataContext context, ICustomerService customerService)
         {
             _context = context;
+            _customerService = customerService;
         }
     }
 }
