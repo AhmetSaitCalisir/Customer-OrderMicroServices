@@ -1,12 +1,13 @@
 ﻿using CustomerService.Data;
 using CustomerService.Entities;
+using CustomerService.Models;
 
 namespace CustomerService.Services
 {
     public interface ICustomerService
     {
-        public Task<string> CreateCustomer(Customer customer);
-        public bool UpdateCustomer(Customer customer);
+        public Task<string> CreateCustomer(CustomerModel customer);
+        public bool UpdateCustomer(CustomerModel customer);
         public bool DeleteCustomer(string id);
         public List<Customer> GetCustomers();
         public Customer GetCustomer(string id);
@@ -27,13 +28,19 @@ namespace CustomerService.Services
         /// <param name="customer"></param>
         /// <returns></returns>
         #region CreateCustomer
-        public async Task<string> CreateCustomer(Customer customer)
+        public async Task<string> CreateCustomer(CustomerModel _customer)
         {
             try
             {
-                customer.Id = Guid.NewGuid().ToString();
-                customer.CreatedAt = DateTime.Now;
-                customer.UpdatedAt = DateTime.Now;
+                Customer customer = new Customer()
+                {
+                    AddressId = _customer.AddressId,
+                    CreatedAt = DateTime.UtcNow,
+                    Email = _customer.Email,
+                    Id = Guid.NewGuid().ToString(),
+                    Name = _customer.Name,
+                    UpdatedAt = DateTime.UtcNow,
+                };
                 await _context.Customers.AddAsync(customer);
                 await _context.SaveChangesAsync();
                 return customer.Id;
@@ -51,11 +58,11 @@ namespace CustomerService.Services
         /// <param name="customer"></param>
         /// <returns></returns>
         #region UpdateCustomer
-        public bool UpdateCustomer(Customer customer)
+        public bool UpdateCustomer(CustomerModel _customer)
         {
             try
             {
-                var currentCustomer = _context.Customers.Where(c => c.Id == customer.Id)
+                var currentCustomer = _context.Customers.Where(c => c.Id == _customer.Id)
                                                          .FirstOrDefault();
 
                 if (currentCustomer == null)
@@ -63,10 +70,12 @@ namespace CustomerService.Services
                     throw new Exception("Customer_Not_Found");
                 }
 
-                customer.CreatedAt = currentCustomer.CreatedAt;
-                customer.UpdatedAt = DateTime.Now;
+                currentCustomer.UpdatedAt = DateTime.UtcNow;
+                currentCustomer.AddressId = _customer.AddressId;
+                currentCustomer.Email = _customer.Email;
+                currentCustomer.Name = _customer.Name;
 
-                _context.Update(customer);
+                _context.Update(currentCustomer);
                 _context.SaveChanges();
                 return true;
             }
