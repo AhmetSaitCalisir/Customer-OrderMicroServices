@@ -5,6 +5,7 @@ using CustomerService.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,14 @@ builder.Services.AddTransient<IValidator<CustomerModel>, CustomerValidator>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var logger = new LoggerConfiguration()
+    .WriteTo.File(
+        Path.Combine(AppContext.BaseDirectory, $"Logs\\{DateTime.Now.ToString("MM/dd/yyyy")}-.log"),
+        rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Logging.AddSerilog(logger);
 
 var app = builder.Build();
 

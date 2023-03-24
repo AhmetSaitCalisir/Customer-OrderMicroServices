@@ -16,10 +16,12 @@ namespace CustomerService.Services
     public class CustomerService : ICustomerService
     {
         private readonly DataContext _context;
+        private readonly ILogger<CustomerService> logger;
 
-        public CustomerService(DataContext context)
+        public CustomerService(DataContext context, ILogger<CustomerService> _logger)
         {
             _context = context;
+            logger = _logger;
         }
 
         /// <summary>
@@ -45,8 +47,9 @@ namespace CustomerService.Services
                 await _context.SaveChangesAsync();
                 return customer.Id;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError($"Error while creating customer. Error Message: {ex.Message}");
                 throw;
             }
         }
@@ -79,8 +82,9 @@ namespace CustomerService.Services
                 _context.SaveChanges();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError($"Error while updating customer with id of {_customer.Id}. Error Message: {ex.Message}");
                 throw;
             }
         }
@@ -108,8 +112,9 @@ namespace CustomerService.Services
                 _context.SaveChanges();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError($"Error while deleting customer with id of {id}. Error Message: {ex.Message}");
                 throw;
             }
         }
@@ -126,8 +131,9 @@ namespace CustomerService.Services
             {
                 return _context.Customers.ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError($"Error while getting customers. Error Message: {ex.Message}");
                 throw;
             }
         }
@@ -152,8 +158,9 @@ namespace CustomerService.Services
 
                 return customer;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError($"Error while getting customer with id of {id}. Error Message: {ex.Message}");
                 throw;
             }
         }
