@@ -116,7 +116,7 @@ namespace CustomerService.Controllers
         #endregion
 
         /// <summary>
-        /// İd'si verilen kullanıcıyı döndüren fonksiyon
+        /// İd'si verilen kullanıcıyı döndüren end point
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -135,6 +135,27 @@ namespace CustomerService.Controllers
                 {
                     return NotFound(id);
                 }
+                return BadRequest(ex.Message);
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// İd'si verilen kullanıcın var olup olmadığını döndüren end point
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        #region Validate
+        [HttpGet("validate/{id}")]
+        public IActionResult Validate(string id)
+        {
+            try
+            {
+                var isCustomerExist = _customerService.ValidateCustomer(id);
+                return Ok(isCustomerExist);
+            }
+            catch (Exception ex)
+            {
                 return BadRequest(ex.Message);
             }
         }

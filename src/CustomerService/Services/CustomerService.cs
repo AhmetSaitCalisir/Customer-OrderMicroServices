@@ -11,6 +11,7 @@ namespace CustomerService.Services
         public bool DeleteCustomer(string id);
         public List<Customer> GetCustomers();
         public Customer GetCustomer(string id);
+        public bool ValidateCustomer(string id);
     }
 
     public class CustomerService : ICustomerService
@@ -161,6 +162,28 @@ namespace CustomerService.Services
             catch (Exception ex)
             {
                 logger.LogError($"Error while getting customer with id of {id}. Error Message: {ex.Message}");
+                throw;
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// Müşterinin var olup olmadığını kontrol eden fonksiyon
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        #region ValidateCustomer
+        public bool ValidateCustomer(string id)
+        {
+            try
+            {
+                var customer = _context.Customers.Where(c => c.Id == id).FirstOrDefault();
+
+                return customer != null;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Error while validating customer with id of {id}. Error Message: {ex.Message}");
                 throw;
             }
         }
