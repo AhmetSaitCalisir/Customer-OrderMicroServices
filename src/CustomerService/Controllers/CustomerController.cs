@@ -49,11 +49,8 @@ namespace CustomerService.Controllers
             try
             {
                 var isCustomerUpdated = _customerService.UpdateCustomer(customer);
-                if (isCustomerUpdated)
-                {
-                    return Ok(isCustomerUpdated);
-                }
-                return BadRequest(isCustomerUpdated);
+
+                return Ok(isCustomerUpdated);
             }
             catch (Exception ex)
             {
@@ -78,11 +75,8 @@ namespace CustomerService.Controllers
             try
             {
                 var isCustomerDeleted = _customerService.DeleteCustomer(id);
-                if (isCustomerDeleted)
-                {
-                    return Ok(isCustomerDeleted);
-                }
-                return BadRequest(isCustomerDeleted);
+
+                return Ok(isCustomerDeleted);
             }
             catch (Exception ex)
             {
@@ -116,7 +110,7 @@ namespace CustomerService.Controllers
         #endregion
 
         /// <summary>
-        /// İd'si verilen kullanıcıyı döndüren end point
+        /// İd'si verilen müşteriyi döndüren end point
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -141,7 +135,7 @@ namespace CustomerService.Controllers
         #endregion
 
         /// <summary>
-        /// İd'si verilen kullanıcın var olup olmadığını döndüren end point
+        /// İd'si verilen müşterinin var olup olmadığını döndüren end point
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

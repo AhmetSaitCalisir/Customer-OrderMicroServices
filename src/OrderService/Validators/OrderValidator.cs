@@ -7,12 +7,12 @@ namespace OrderService.Validators
     {
         public OrderValidator()
         {
-            RuleFor(x => x.AddressId).NotNull();
-            RuleFor(x => x.CustomerId).NotNull();
-            RuleFor(x => x.Price).NotNull().GreaterThanOrEqualTo(0);
-            RuleFor(x => x.ProductId).NotNull();
-            RuleFor(x => x.Quantity).NotNull().GreaterThanOrEqualTo(1);
-            RuleFor(x => x.Status).NotNull();
+            RuleFor(x => x.AddressId).NotEmpty();
+            RuleFor(x => x.CustomerId).NotEmpty();
+            RuleFor(x => x.Price).NotEmpty().GreaterThanOrEqualTo(0);
+            RuleFor(x => x.ProductId).NotEmpty();
+            RuleFor(x => x.Quantity).NotEmpty().GreaterThanOrEqualTo(1);
+            RuleFor(x => x.Status).NotEmpty();
         }
     }
 }

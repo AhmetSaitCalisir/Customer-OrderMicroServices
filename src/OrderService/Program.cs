@@ -20,6 +20,7 @@ builder.Services.AddControllers().AddFluentValidation(x =>
     x.ImplicitlyValidateChildProperties = true;
 });
 builder.Services.AddTransient<IValidator<OrderModel>, OrderValidator>();
+builder.Services.AddTransient<IValidator<OrderStatusModel>, OrderStatusValidator>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
