@@ -45,6 +45,52 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
+    },
+    // ORDER SERVICE
+    {
+      "DownstreamPathTemplate": "/api/v1/order",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
+      "UpstreamPathTemplate": "/Order",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post",
+        "Put"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/order/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
+      "UpstreamPathTemplate": "/Order/{id}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Delete"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/order/changestatus",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/Customer/ChangeStatus",
+      "UpstreamHttpMethod": [
+        "Put"
+      ]
     }
   ]
 }
