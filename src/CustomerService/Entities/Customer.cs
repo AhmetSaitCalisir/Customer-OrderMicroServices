@@ -10,12 +10,12 @@ namespace CustomerService.Entities
 
         public string Email { get; set; }
 
-        [JsonIgnore]
-        public virtual Address Address { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public virtual Address? Address { get; set; }
 
         public string AddressId { get; set; }
 
-        [JsonIgnore]
-        public ICollection<Order> Orders { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public ICollection<Order>? Orders { get; set; }
     }
 }

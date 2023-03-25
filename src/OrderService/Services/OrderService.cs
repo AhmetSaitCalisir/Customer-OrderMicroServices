@@ -1,6 +1,7 @@
 ﻿using OrderService.Data;
 using OrderService.Entities;
 using OrderService.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace OrderService.Services
 {
@@ -72,7 +73,7 @@ namespace OrderService.Services
             {
                 bool isCustomerValid = await _customerProviderService.ValidateCustomer(_order.CustomerId);
 
-                if(!isCustomerValid)
+                if (!isCustomerValid)
                 {
                     throw new Exception("Customer_Not_Valid");
                 }
@@ -141,7 +142,10 @@ namespace OrderService.Services
         {
             try
             {
-                var order = _context.Orders.Where(c => c.Id == id).FirstOrDefault();
+                var order = _context.Orders.Where(c => c.Id == id)
+                    .Include(x => x.Address)
+                    .Include(x => x.Customer)
+                    .FirstOrDefault();
 
                 if (order == null)
                 {

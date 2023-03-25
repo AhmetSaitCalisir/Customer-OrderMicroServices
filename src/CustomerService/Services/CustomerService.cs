@@ -1,6 +1,7 @@
 ﻿using CustomerService.Data;
 using CustomerService.Entities;
 using CustomerService.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CustomerService.Services
 {
@@ -150,7 +151,8 @@ namespace CustomerService.Services
         {
             try
             {
-                var customer = _context.Customers.Where(c => c.Id == id).FirstOrDefault();
+                var customer = _context.Customers.Where(c => c.Id == id)
+                    .Include(x => x.Address).FirstOrDefault();
 
                 if (customer == null)
                 {
