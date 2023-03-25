@@ -7,7 +7,7 @@ namespace OrderService.Services
     public interface IOrderService
     {
         public Task<string> CreateOrder(OrderModel order);
-        public bool UpdateOrder(OrderModel order);
+        public Task<bool> UpdateOrder(OrderModel order);
         public bool DeleteOrder(string id);
         public List<Order> GetOrders();
         public Order GetOrder(string id);
@@ -17,11 +17,13 @@ namespace OrderService.Services
     {
         private readonly DataContext _context;
         private readonly ILogger<OrderService> logger;
+        private readonly ICustomerProviderService _customerProviderService;
 
-        public OrderService(DataContext context, ILogger<OrderService> _logger)
+        public OrderService(DataContext context, ILogger<OrderService> _logger, ICustomerProviderService customerProviderService)
         {
             _context = context;
             logger = _logger;
+            _customerProviderService = customerProviderService;
         }
 
         /// <summary>
@@ -68,6 +70,13 @@ namespace OrderService.Services
         {
             try
             {
+                bool isCustomerValid = await _customerProviderService.ValidateCustomer(_order.CustomerId);
+
+                if(!isCustomerValid)
+                {
+                    throw new Exception("Customer_Not_Valid");
+                }
+
                 Order order = new Order()
                 {
                     AddressId = _order.AddressId,
@@ -174,10 +183,17 @@ namespace OrderService.Services
         /// <param name="order"></param>
         /// <returns></returns>
         #region UpdateOrder
-        public bool UpdateOrder(OrderModel order)
+        public async Task<bool> UpdateOrder(OrderModel order)
         {
             try
             {
+                bool isCustomerValid = await _customerProviderService.ValidateCustomer(order.CustomerId);
+
+                if (!isCustomerValid)
+                {
+                    throw new Exception("Customer_Not_Valid");
+                }
+
                 var currentOrder = _context.Orders.Where(c => c.Id == order.Id)
                                                          .FirstOrDefault();
 

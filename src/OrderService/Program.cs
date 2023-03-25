@@ -14,6 +14,12 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddScoped<IOrderService, OrderService.Services.OrderService>();
+builder.Services.AddSingleton<ICustomerProviderService, CustomerProviderService>();
+
+builder.Services.AddHttpClient<ICustomerProviderService, CustomerProviderService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration.GetSection("ApiGatewayUrl").Get<string>());
+});
 
 builder.Services.AddControllers().AddFluentValidation(x =>
 {
