@@ -185,65 +185,93 @@ namespace CustomerSerice.ApiTest
         [TestMethod]
         public async Task Create_Customer_ReturnOk()
         {
-            _customerService.Setup(s => s.CreateCustomer(It.IsAny<CustomerModel>())).ReturnsAsync(Guid.NewGuid().ToString());
+            try
+            {
+                _customerService.Setup(s => s.CreateCustomer(It.IsAny<CustomerModel>())).ReturnsAsync(Guid.NewGuid().ToString());
 
-            _controller = new CustomerController(_customerService.Object);
+                _controller = new CustomerController(_customerService.Object);
 
-            var customer = _fixture.Create<CustomerModel>();
+                var customer = _fixture.Create<CustomerModel>();
 
-            var result = await _controller.Create(customer);
+                var result = await _controller.Create(customer);
 
-            var response = result as ObjectResult;
+                var response = result as ObjectResult;
 
-            Assert.AreEqual(200, response.StatusCode);
+                Assert.AreEqual(200, response.StatusCode);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [TestMethod]
         public async Task Create_Customer_ReturnGuid()
         {
-            _customerService.Setup(s => s.CreateCustomer(It.IsAny<CustomerModel>())).ReturnsAsync(Guid.NewGuid().ToString());
+            try
+            {
+                _customerService.Setup(s => s.CreateCustomer(It.IsAny<CustomerModel>())).ReturnsAsync(Guid.NewGuid().ToString());
 
-            _controller = new CustomerController(_customerService.Object);
+                _controller = new CustomerController(_customerService.Object);
 
-            var customer = _fixture.Create<CustomerModel>();
+                var customer = _fixture.Create<CustomerModel>();
 
-            var result = await _controller.Create(customer);
+                var result = await _controller.Create(customer);
 
-            var response = result as ObjectResult;
+                var response = result as ObjectResult;
 
-            Assert.IsInstanceOfType(response.Value, typeof(string));
+                Assert.IsInstanceOfType(response.Value, typeof(string));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [TestMethod]
         public async Task Create_Customer_ReturnNotFound()
         {
-            _customerService.Setup(s => s.CreateCustomer(It.IsAny<CustomerModel>())).ThrowsAsync(new Exception("Something_Not_Found"));
+            try
+            {
+                _customerService.Setup(s => s.CreateCustomer(It.IsAny<CustomerModel>())).ThrowsAsync(new Exception("Something_Not_Found"));
 
-            _controller = new CustomerController(_customerService.Object);
+                _controller = new CustomerController(_customerService.Object);
 
-            var customer = _fixture.Create<CustomerModel>();
+                var customer = _fixture.Create<CustomerModel>();
 
-            var result = await _controller.Create(customer);
+                var result = await _controller.Create(customer);
 
-            var response = result as ObjectResult;
+                var response = result as ObjectResult;
 
-            Assert.AreEqual(404, response.StatusCode);
+                Assert.AreEqual(404, response.StatusCode);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [TestMethod]
         public async Task Create_Customer_ReturnBadRequest()
         {
-            _customerService.Setup(s => s.CreateCustomer(It.IsAny<CustomerModel>())).ThrowsAsync(new Exception());
+            try
+            {
+                _customerService.Setup(s => s.CreateCustomer(It.IsAny<CustomerModel>())).ThrowsAsync(new Exception());
 
-            _controller = new CustomerController(_customerService.Object);
+                _controller = new CustomerController(_customerService.Object);
 
-            var customer = _fixture.Create<CustomerModel>();
+                var customer = _fixture.Create<CustomerModel>();
 
-            var result = await _controller.Create(customer);
+                var result = await _controller.Create(customer);
 
-            var response = result as ObjectResult;
+                var response = result as ObjectResult;
 
-            Assert.AreEqual(400, response.StatusCode);
+                Assert.AreEqual(400, response.StatusCode);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         #endregion
 
@@ -251,65 +279,93 @@ namespace CustomerSerice.ApiTest
         [TestMethod]
         public void Update_Customer_ReturnOk()
         {
-            _customerService.Setup(s => s.UpdateCustomer(It.IsAny<CustomerModel>())).Returns(true);
+            try
+            {
+                _customerService.Setup(s => s.UpdateCustomer(It.IsAny<CustomerModel>())).Returns(true);
 
-            _controller = new CustomerController(_customerService.Object);
+                _controller = new CustomerController(_customerService.Object);
 
-            var customer = _fixture.Create<CustomerModel>();
+                var customer = _fixture.Create<CustomerModel>();
 
-            var result = _controller.Update(customer);
+                var result = _controller.Update(customer);
 
-            var response = result as ObjectResult;
+                var response = result as ObjectResult;
 
-            Assert.AreEqual(200, response.StatusCode);
+                Assert.AreEqual(200, response.StatusCode);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [TestMethod]
         public async Task Update_Customer_ReturnBoolean()
         {
-            _customerService.Setup(s => s.UpdateCustomer(It.IsAny<CustomerModel>())).Returns(true);
+            try
+            {
+                _customerService.Setup(s => s.UpdateCustomer(It.IsAny<CustomerModel>())).Returns(true);
 
-            _controller = new CustomerController(_customerService.Object);
+                _controller = new CustomerController(_customerService.Object);
 
-            var customer = _fixture.Create<CustomerModel>();
+                var customer = _fixture.Create<CustomerModel>();
 
-            var result = _controller.Update(customer);
+                var result = _controller.Update(customer);
 
-            var response = result as ObjectResult;
+                var response = result as ObjectResult;
 
-            Assert.IsInstanceOfType(response.Value, typeof(bool));
+                Assert.IsInstanceOfType(response.Value, typeof(bool));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [TestMethod]
         public void Update_Customer_ReturnNotFound()
         {
-            _customerService.Setup(s => s.UpdateCustomer(It.IsAny<CustomerModel>())).Throws(new Exception("Something_Not_Found"));
+            try
+            {
+                _customerService.Setup(s => s.UpdateCustomer(It.IsAny<CustomerModel>())).Throws(new Exception("Something_Not_Found"));
 
-            _controller = new CustomerController(_customerService.Object);
+                _controller = new CustomerController(_customerService.Object);
 
-            var customer = _fixture.Create<CustomerModel>();
+                var customer = _fixture.Create<CustomerModel>();
 
-            var result = _controller.Update(customer);
+                var result = _controller.Update(customer);
 
-            var response = result as ObjectResult;
+                var response = result as ObjectResult;
 
-            Assert.AreEqual(404, response.StatusCode);
+                Assert.AreEqual(404, response.StatusCode);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [TestMethod]
         public void Update_Customer_ReturnBadRequest()
         {
-            _customerService.Setup(s => s.UpdateCustomer(It.IsAny<CustomerModel>())).Throws(new Exception());
+            try
+            {
+                _customerService.Setup(s => s.UpdateCustomer(It.IsAny<CustomerModel>())).Throws(new Exception());
 
-            _controller = new CustomerController(_customerService.Object);
+                _controller = new CustomerController(_customerService.Object);
 
-            var customer = _fixture.Create<CustomerModel>();
+                var customer = _fixture.Create<CustomerModel>();
 
-            var result = _controller.Update(customer);
+                var result = _controller.Update(customer);
 
-            var response = result as ObjectResult;
+                var response = result as ObjectResult;
 
-            Assert.AreEqual(400, response.StatusCode);
+                Assert.AreEqual(400, response.StatusCode);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         #endregion
 
@@ -317,57 +373,85 @@ namespace CustomerSerice.ApiTest
         [TestMethod]
         public void Delete_Customer_ReturnOk()
         {
-            _customerService.Setup(s => s.DeleteCustomer(It.IsAny<string>())).Returns(true);
+            try
+            {
+                _customerService.Setup(s => s.DeleteCustomer(It.IsAny<string>())).Returns(true);
 
-            _controller = new CustomerController(_customerService.Object);
+                _controller = new CustomerController(_customerService.Object);
 
-            var result = _controller.Delete(Guid.NewGuid().ToString());
+                var result = _controller.Delete(Guid.NewGuid().ToString());
 
-            var response = result as ObjectResult;
+                var response = result as ObjectResult;
 
-            Assert.AreEqual(200, response.StatusCode);
+                Assert.AreEqual(200, response.StatusCode);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [TestMethod]
         public async Task Delete_Customer_ReturnBoolean()
         {
-            _customerService.Setup(s => s.DeleteCustomer(It.IsAny<string>())).Returns(true);
+            try
+            {
+                _customerService.Setup(s => s.DeleteCustomer(It.IsAny<string>())).Returns(true);
 
-            _controller = new CustomerController(_customerService.Object);
+                _controller = new CustomerController(_customerService.Object);
 
-            var result = _controller.Delete(Guid.NewGuid().ToString());
+                var result = _controller.Delete(Guid.NewGuid().ToString());
 
-            var response = result as ObjectResult;
+                var response = result as ObjectResult;
 
-            Assert.IsInstanceOfType(response.Value, typeof(bool));
+                Assert.IsInstanceOfType(response.Value, typeof(bool));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [TestMethod]
         public void Delete_Customer_ReturnNotFound()
         {
-            _customerService.Setup(s => s.DeleteCustomer(It.IsAny<string>())).Throws(new Exception("Something_Not_Found"));
+            try
+            {
+                _customerService.Setup(s => s.DeleteCustomer(It.IsAny<string>())).Throws(new Exception("Something_Not_Found"));
 
-            _controller = new CustomerController(_customerService.Object);
+                _controller = new CustomerController(_customerService.Object);
 
-            var result = _controller.Delete(Guid.NewGuid().ToString());
+                var result = _controller.Delete(Guid.NewGuid().ToString());
 
-            var response = result as ObjectResult;
+                var response = result as ObjectResult;
 
-            Assert.AreEqual(404, response.StatusCode);
+                Assert.AreEqual(404, response.StatusCode);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [TestMethod]
         public void Delete_Customer_ReturnBadRequest()
         {
-            _customerService.Setup(s => s.DeleteCustomer(It.IsAny<string>())).Throws(new Exception());
+            try
+            {
+                _customerService.Setup(s => s.DeleteCustomer(It.IsAny<string>())).Throws(new Exception());
 
-            _controller = new CustomerController(_customerService.Object);
+                _controller = new CustomerController(_customerService.Object);
 
-            var result = _controller.Delete(Guid.NewGuid().ToString());
+                var result = _controller.Delete(Guid.NewGuid().ToString());
 
-            var response = result as ObjectResult;
+                var response = result as ObjectResult;
 
-            Assert.AreEqual(400, response.StatusCode);
+                Assert.AreEqual(400, response.StatusCode);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         #endregion
 
@@ -375,43 +459,64 @@ namespace CustomerSerice.ApiTest
         [TestMethod]
         public void Validate_Customer_ReturnOk()
         {
-            _customerService.Setup(s => s.ValidateCustomer(It.IsAny<string>())).Returns(true);
+            try
+            {
+                _customerService.Setup(s => s.ValidateCustomer(It.IsAny<string>())).Returns(true);
 
-            _controller = new CustomerController(_customerService.Object);
+                _controller = new CustomerController(_customerService.Object);
 
-            var result = _controller.Validate(Guid.NewGuid().ToString());
+                var result = _controller.Validate(Guid.NewGuid().ToString());
 
-            var response = result as ObjectResult;
+                var response = result as ObjectResult;
 
-            Assert.AreEqual(200, response.StatusCode);
+                Assert.AreEqual(200, response.StatusCode);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [TestMethod]
         public async Task Validate_Customer_ReturnBoolean()
         {
-            _customerService.Setup(s => s.ValidateCustomer(It.IsAny<string>())).Returns(true);
+            try
+            {
+                _customerService.Setup(s => s.ValidateCustomer(It.IsAny<string>())).Returns(true);
 
-            _controller = new CustomerController(_customerService.Object);
+                _controller = new CustomerController(_customerService.Object);
 
-            var result = _controller.Validate(Guid.NewGuid().ToString());
+                var result = _controller.Validate(Guid.NewGuid().ToString());
 
-            var response = result as ObjectResult;
+                var response = result as ObjectResult;
 
-            Assert.IsInstanceOfType(response.Value, typeof(bool));
+                Assert.IsInstanceOfType(response.Value, typeof(bool));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [TestMethod]
         public void Validate_Customer_ReturnBadRequest()
         {
-            _customerService.Setup(s => s.ValidateCustomer(It.IsAny<string>())).Throws(new Exception());
+            try
+            {
+                _customerService.Setup(s => s.ValidateCustomer(It.IsAny<string>())).Throws(new Exception());
 
-            _controller = new CustomerController(_customerService.Object);
+                _controller = new CustomerController(_customerService.Object);
 
-            var result = _controller.Validate(Guid.NewGuid().ToString());
+                var result = _controller.Validate(Guid.NewGuid().ToString());
 
-            var response = result as ObjectResult;
+                var response = result as ObjectResult;
 
-            Assert.AreEqual(400, response.StatusCode);
+                Assert.AreEqual(400, response.StatusCode);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         #endregion
     }
