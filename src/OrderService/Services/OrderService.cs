@@ -19,12 +19,16 @@ namespace OrderService.Services
         private readonly DataContext _context;
         private readonly ILogger<OrderService> logger;
         private readonly ICustomerProviderService _customerProviderService;
+        private readonly IProductService _productService;
+        private readonly IAddressService _addressService;
 
-        public OrderService(DataContext context, ILogger<OrderService> _logger, ICustomerProviderService customerProviderService)
+        public OrderService(DataContext context, ILogger<OrderService> _logger, ICustomerProviderService customerProviderService, IProductService productService, IAddressService addressService)
         {
             _context = context;
             logger = _logger;
             _customerProviderService = customerProviderService;
+            _productService = productService;
+            _addressService = addressService;
         }
 
         /// <summary>
@@ -75,7 +79,21 @@ namespace OrderService.Services
 
                 if (!isCustomerValid)
                 {
-                    throw new Exception("Customer_Not_Valid");
+                    throw new Exception("Customer_Not_Found");
+                }
+
+                bool isProductValid = _productService.ValidateProduct(_order.ProductId);
+
+                if (!isProductValid)
+                {
+                    throw new Exception("Product_Not_Found");
+                }
+
+                bool isAddressValid = _addressService.ValidateAddress(_order.AddressId);
+
+                if (!isAddressValid)
+                {
+                    throw new Exception("Order_Not_Found");
                 }
 
                 Order order = new Order()
@@ -195,7 +213,21 @@ namespace OrderService.Services
 
                 if (!isCustomerValid)
                 {
-                    throw new Exception("Customer_Not_Valid");
+                    throw new Exception("Customer_Not_Found");
+                }
+
+                bool isProductValid = _productService.ValidateProduct(order.ProductId);
+
+                if (!isProductValid)
+                {
+                    throw new Exception("Product_Not_Found");
+                }
+
+                bool isAddressValid = _addressService.ValidateAddress(order.AddressId);
+
+                if (!isAddressValid)
+                {
+                    throw new Exception("Order_Not_Found");
                 }
 
                 var currentOrder = _context.Orders.Where(c => c.Id == order.Id)

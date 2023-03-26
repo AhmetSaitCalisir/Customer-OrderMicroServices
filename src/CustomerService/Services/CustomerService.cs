@@ -19,11 +19,13 @@ namespace CustomerService.Services
     {
         private readonly DataContext _context;
         private readonly ILogger<CustomerService> logger;
+        private readonly IAddressService _addressService;
 
-        public CustomerService(DataContext context, ILogger<CustomerService> _logger)
+        public CustomerService(DataContext context, ILogger<CustomerService> _logger, IAddressService addressService)
         {
             _context = context;
             logger = _logger;
+            _addressService = addressService;
         }
 
         /// <summary>
@@ -36,6 +38,11 @@ namespace CustomerService.Services
         {
             try
             {
+                if (!_addressService.ValidateAddress(_customer.AddressId))
+                {
+                    throw new Exception("Address_Not_Found");
+                }
+
                 Customer customer = new Customer()
                 {
                     AddressId = _customer.AddressId,
@@ -67,6 +74,11 @@ namespace CustomerService.Services
         {
             try
             {
+                if (!_addressService.ValidateAddress(_customer.AddressId))
+                {
+                    throw new Exception("Address_Not_Found");
+                }
+
                 var currentCustomer = _context.Customers.Where(c => c.Id == _customer.Id)
                                                          .FirstOrDefault();
 

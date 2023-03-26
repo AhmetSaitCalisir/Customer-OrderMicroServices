@@ -31,6 +31,10 @@ namespace CustomerService.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.Message == "Address_Not_Found")
+                {
+                    return NotFound(ex.Message);
+                }
                 return BadRequest(ex.Message);
             }
 
@@ -54,9 +58,9 @@ namespace CustomerService.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.Message == "Customer_Not_Found")
+                if (ex.Message.Contains("Not_Found"))
                 {
-                    return NotFound(customer.Id);
+                    return NotFound(ex.Message);
                 }
                 return BadRequest(ex.Message);
             }
@@ -82,7 +86,7 @@ namespace CustomerService.Controllers
             {
                 if (ex.Message == "Customer_Not_Found")
                 {
-                    return NotFound(id);
+                    return NotFound(ex.Message);
                 }
                 return BadRequest(ex.Message);
             }
@@ -127,7 +131,7 @@ namespace CustomerService.Controllers
             {
                 if (ex.Message == "Customer_Not_Found")
                 {
-                    return NotFound(id);
+                    return NotFound(ex.Message);
                 }
                 return BadRequest(ex.Message);
             }

@@ -31,6 +31,10 @@ namespace OrderService.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.Message.Contains("Not_Found"))
+                {
+                    return NotFound(ex.Message);
+                }
                 return BadRequest(ex.Message);
             }
         }
@@ -53,9 +57,9 @@ namespace OrderService.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.Message == "Order_Not_Found")
+                if (ex.Message.Contains("Not_Found"))
                 {
-                    return NotFound(order.Id);
+                    return NotFound(ex.Message);
                 }
                 return BadRequest(ex.Message);
             }
